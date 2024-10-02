@@ -1,0 +1,93 @@
+Стъпка 1: Създай нов проект
+Отвори Visual Studio.
+Избери "Create a new project".
+Избери "Windows Forms App (.NET Framework)" и му дай име, например "NoteTakingApp".
+Стъпка 2: Дизайн на формата
+Отвори формата (Form1) в дизайнера и добави следните контроли от Toolbox:
+
+TextBox (за въвеждане на бележка) – задайте му свойството Multiline на true и Name на txtNote.
+Button (за добавяне на бележка) – задайте му Text на "Добави" и Name на btnAddNote.
+ListBox (за показване на бележките) – задайте Name на listBoxNotes.
+Button (за изтриване на избрана бележка) – задайте му Text на "Изтрий" и Name на btnDeleteNote.
+Button (за редактиране на избрана бележка) – задайте му Text на "Редактирай" и Name на btnEditNote.
+Разположи контролните елементи в подходяща подредба.
+
+Стъпка 3: Код
+След като добавиш контролите, кликни два пъти върху бутоните, за да генерираш обработчици на събития и добави следния код в Form1.cs:
+
+csharp
+Copy code
+using System;
+using System.Windows.Forms;
+
+namespace NoteTakingApp
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        // Обработчик за добавяне на бележка
+        private void btnAddNote_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtNote.Text))
+            {
+                listBoxNotes.Items.Add(txtNote.Text);
+                txtNote.Clear(); // Изчистване на текстовото поле
+            }
+            else
+            {
+                MessageBox.Show("Моля, въведете текст на бележката.", "Грешка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Обработчик за изтриване на избрана бележка
+        private void btnDeleteNote_Click(object sender, EventArgs e)
+        {
+            if (listBoxNotes.SelectedItem != null)
+            {
+                listBoxNotes.Items.Remove(listBoxNotes.SelectedItem);
+            }
+            else
+            {
+                MessageBox.Show("Моля, изберете бележка за изтриване.", "Грешка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Обработчик за редактиране на избрана бележка
+        private void btnEditNote_Click(object sender, EventArgs e)
+        {
+            if (listBoxNotes.SelectedItem != null)
+            {
+                txtNote.Text = listBoxNotes.SelectedItem.ToString();
+                listBoxNotes.Items.Remove(listBoxNotes.SelectedItem);
+            }
+            else
+            {
+                MessageBox.Show("Моля, изберете бележка за редактиране.", "Грешка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+}
+Обяснение на кода:
+Обработчик за добавяне на бележка (btnAddNote_Click):
+
+Проверява дали текстовото поле не е празно. Ако не е, добавя текста в ListBox и изчиства текстовото поле.
+Ако е празно, показва съобщение за грешка.
+Обработчик за изтриване на бележка (btnDeleteNote_Click):
+
+Проверява дали е избрана бележка в ListBox. Ако е, я изтрива.
+Ако не е, показва съобщение за грешка.
+Обработчик за редактиране на бележка (btnEditNote_Click):
+
+Проверява дали е избрана бележка. Ако е, зарежда текста в текстовото поле и я изтрива от списъка.
+Ако не е, показва съобщение за грешка.
+Стъпка 4: Дизайн на формата
+Увери се, че имената на контролите (например txtNote, listBoxNotes, btnAddNote, btnDeleteNote, btnEditNote) съвпадат с имената, използвани в кода.
+
+Стъпка 5: Тествай приложението
+Сега можеш да стартираш приложението, да добавяш, редактираш и изтриваш бележки.
+
+Това е основен пример, който можеш да разшириш, като добавиш функции за запазване на бележките в текстови файлове или база данни. Успех!
